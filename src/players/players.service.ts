@@ -8,7 +8,6 @@ export class PlayersService {
   private players: Player[] = [];
 
   async upsertPlayer(createPlayerDto: CreatePlayerDto): Promise<void> {
-    this.logger.log(`Create Player DTO: ${createPlayerDto}`);
     this.create(createPlayerDto);
   }
 
@@ -24,7 +23,7 @@ export class PlayersService {
       rankPosition: 1,
       photoUrl: 'http://www.google.com/photos/',
     };
-
+    this.logger.log(`Create Player DTO: ${JSON.stringify(createPlayerDto)}`);
     this.players.push(player);
   }
 }

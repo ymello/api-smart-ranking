@@ -3,13 +3,10 @@ import { CreatePlayerDto } from './dtos/create_player.dto';
 import { PlayersService } from './players.service';
 @Controller('api/v1/players')
 export class PlayersController {
-
   constructor(private readonly playersService: PlayersService) {}
 
   @Post()
   async upsertPlayer(@Body() createPlayerDto: CreatePlayerDto) {
-    const { email, name, phoneNumber } = createPlayerDto;
-
     await this.playersService.upsertPlayer(createPlayerDto);
   }
 }
