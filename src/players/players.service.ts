@@ -8,7 +8,19 @@ export class PlayersService {
   private players: Player[] = [];
 
   async upsertPlayer(createPlayerDto: CreatePlayerDto): Promise<void> {
-    this.create(createPlayerDto);
+    const { email } = createPlayerDto;
+
+    const playerFinding = this.players.find((player) => player.email === email);
+
+    if (playerFinding) {
+      this.update(playerFinding, createPlayerDto);
+    } else {
+      this.create(createPlayerDto);
+    }
+  }
+
+  async getAll(): Promise<Player[]> {
+    return await this.players;
   }
 
   private create(createPlayerDto: CreatePlayerDto): void {
@@ -25,5 +37,13 @@ export class PlayersService {
     };
     this.logger.log(`Create Player DTO: ${JSON.stringify(createPlayerDto)}`);
     this.players.push(player);
+  }
+
+  private update(
+    playerFinding: CreatePlayerDto,
+    player: CreatePlayerDto,
+  ): void {
+    const { name } = player;
+    playerFinding.name = name;
   }
 }
